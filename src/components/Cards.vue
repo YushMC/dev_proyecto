@@ -5,7 +5,7 @@
                 labore
                 vero
                 rerum nulla perferendis earum!</h1>
-            <button>JAJA</button>
+            <button>Comenzar</button>
         </div>
     </transition>
 </template>
@@ -27,11 +27,10 @@ console.log('isCardInfoVisible en el componente: ', isCardInfoVisible)
     background: rgba(255, 255, 255, 0.05);
     padding: 2%;
     border-radius: 10px;
-    border: solid 2px #0000000c;
+    border: solid 2px #00000096;
     filter: drop-shadow(-3px 3px 10px #000000);
-    backdrop-filter: blur(1px);
+    backdrop-filter: blur(2px);
     transition: all 0.3s linear;
-    opacity: 1;
 }
 
 .cardInfo h1 {
@@ -42,8 +41,21 @@ console.log('isCardInfoVisible en el componente: ', isCardInfoVisible)
 }
 
 .cardInfo button {
-    margin: 2%;
+    border: 2px solid #000000;
+    border-radius: 5px;
+    background: none;
+    color: #000000;
     padding: 2%;
+    margin: 2% 0;
+    transition: all 0.3s linear;
+    text-transform: uppercase;
+}
 
+.cardInfo button:hover {
+    background: #000000;
+    color: #fff;
+    box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.603);
+    cursor: pointer;
+    transform: scale(1.05);
 }
 </style>
