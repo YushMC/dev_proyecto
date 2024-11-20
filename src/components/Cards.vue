@@ -23,18 +23,73 @@ console.log('isCardInfoVisible en el componente: ', isCardInfoVisible)
     display: flex;
     flex-direction: column;
     top: 55%;
-    left: 38%;
-    background: rgba(255, 255, 255, 0.05);
+    left: 32%;
+    background: rgba(49, 49, 49, 0.596);
     padding: 2%;
     border-radius: 10px;
-    border: solid 2px #00000096;
     filter: drop-shadow(-3px 3px 10px #000000);
-    backdrop-filter: blur(2px);
-    transition: all 0.3s linear;
+    backdrop-filter: blur(10px);
+    transition: all 0.5s linear;
 }
 
+.cardInfo:hover {
+    transform: scale(1.1);
+}
+
+@keyframes borderColor {
+    0% {
+        border-bottom-color: #60daaa;
+        border-left-color: #9e3cdf;
+        border-top-color: transparent;
+        border-right-color: transparent;
+    }
+
+    20% {
+        border-bottom-color: #60daaa;
+        border-left-color: transparent;
+        border-top-color: transparent;
+        border-right-color: transparent;
+    }
+
+    40% {
+        border-bottom-color: transparent;
+        border-left-color: #9e3cdf;
+        border-top-color: transparent;
+        border-right-color: transparent;
+    }
+
+    50% {
+        border-bottom-color: transparent;
+        border-left-color: #9e3cdf;
+        border-top-color: #cec54c;
+        border-right-color: transparent;
+    }
+
+    70% {
+        border-bottom-color: transparent;
+        border-left-color: transparent;
+        border-top-color: #cec54c;
+        border-right-color: #df3cd2;
+    }
+
+    90% {
+        border-bottom-color: transparent;
+        border-left-color: transparent;
+        border-top-color: transparent;
+        border-right-color: #df3cd2;
+    }
+
+    100% {
+        border-bottom-color: transparent;
+        border-left-color: transparent;
+        border-top-color: transparent;
+        border-right-color: transparent;
+    }
+}
+
+
 .cardInfo h1 {
-    color: black;
+    color: rgb(245, 245, 245);
     font-size: 1em;
     line-height: 1.5;
     font-weight: 400;

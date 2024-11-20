@@ -1,5 +1,8 @@
-import { createApp } from 'vue'
-import './style.css'
-import App from './App.vue'
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router'; // Importa el archivo de rutas
 
-createApp(App).mount('#app')
+const app = createApp(App);
+
+app.use(router); // Usa el router en tu app
+app.mount('#app'); // Monta la app en el elemento raíz
