@@ -12,7 +12,7 @@
       id="izquierda"
       :style="{ transform: `scale(${scale})`, opacity: `${opacity}` }"
       @click="ubicacion(2)"
-      v-if="isItemVisible2"
+      v-if="isItemVisible2" 
     >
       Hola 2
     </button>
@@ -45,6 +45,12 @@ const {
   scale,
   click,
 } = useItemsMenu();
+
+
+import { useSceenSize } from "../composables/useScreenSize";
+const {screenHeight, screenWidth, updateSizes} = useSceenSize();
+
+
 
 const opacity = ref(0);
 //mover la camara al item seleccionado
@@ -104,6 +110,7 @@ onMounted(() => {
   opacity.value = "1";
 });
 onUnmounted(() => {
+  resetItems();
   toggleCardInfo();
 });
 </script>
@@ -181,6 +188,23 @@ button {
     transform: translateY(0) scale(1);
 
     /* Regresar */
+  }
+}
+@media screen and (max-width: 600px) {
+  button{
+    width: 20%;
+  }
+  #izquierda{
+    top: 90%;
+    left: 5%;
+  }
+  #derecha{
+    top: 90%;
+    right: 5%;
+  }
+  #arriba{
+    top: 90%;
+    left: 40%;
   }
 }
 </style>

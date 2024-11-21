@@ -1,6 +1,6 @@
 <template>
     <transition>
-        <div class="cardInfo" v-if="isCardInfoVisible">
+        <div class="cardInfo" v-if="isCardInfoVisible" >
             <h1>{{ getText }}</h1>
             <router-link :to="getEnlace">Comenzar</router-link>
         </div>
@@ -113,5 +113,12 @@ console.log('dato en getEnlace: ', getEnlace.value)
     box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.603);
     cursor: pointer;
     transform: scale(1.05);
+}
+@media screen and (max-width:600px) {
+    .cardInfo{
+        width: 60%;
+        top: 40%;
+        left: 20%;
+    }
 }
 </style>

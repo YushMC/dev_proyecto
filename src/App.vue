@@ -1,11 +1,62 @@
 <script setup>
-import { ref, watch } from "vue";
+import { onMounted, onUnmounted, ref, watch } from "vue";
 import { RouterView, useRouter, useRoute } from "vue-router";
 
 import { useItemsMenu } from "./composables/useItemsMenu";
-const { posicionX, posicionY, scale } = useItemsMenu();
+const { posicionX, posicionY, scale, setScale, matrizPosiciones} = useItemsMenu();
 
-// Variables reactivas para controlar la dirección de la transición
+import { useSceenSize } from "./composables/useScreenSize";
+const {screenHeight, screenWidth, updateSizes} = useSceenSize();
+
+const updateScrrenSize = () => {
+  updateSizes();
+  updateScaleVideo();
+};
+const updateScaleVideo = () => {
+  //mayores a este tamaño
+  if (screenWidth.value > 1500) {
+    setScale(0.7);
+  }
+  if (screenWidth.value < 1500 && screenWidth.value >= 1000) {
+    setScale(0.5);
+  }
+  //Nest Hub Max
+  if(screenWidth.value == 1280 && screenHeight.value == 800){
+    setScale(0.6);
+  }
+  //Ipads
+  if ((screenHeight.value < 1400 && screenHeight.value > 700) && screenWidth.value < 1100) {
+    setScale(0.9);
+  }
+  //surface Duo
+  if (screenHeight.value <= 750 && screenWidth.value >= 500) {
+    setScale(0.5);
+  }
+  if(screenWidth.value < 500 && screenWidth.value >370){
+    setScale(0.6);
+    
+    posicionX.value = "0.7%";
+    matrizPosiciones[3][0] = "0.7%";
+  }
+  if(screenWidth.value <= 370 ){
+    setScale(0.5);
+  }
+  if(screenWidth.value == 320 && screenHeight.value == 568){
+    setScale(0.3);
+  }
+  if(screenWidth.value <=500){
+    posicionX.value = "0.7%";
+    matrizPosiciones[3][0] = "0.7%";
+  }
+};
+onMounted(() => {
+  updateScaleVideo();
+  window.addEventListener("resize", updateScrrenSize);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("resize", updateScrrenSize);
+});
 </script>
 
 <template>
@@ -60,8 +111,7 @@ video {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: all 0.3s linear;
-  will-change: transform;
+  transition: all 0.2s linear;
   /* Duración de 0.5 segundos */
 }
 
