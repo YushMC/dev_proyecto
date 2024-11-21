@@ -195,15 +195,15 @@ button {
     width: 20%;
   }
   #izquierda{
-    top: 90%;
+    top: 85%;
     left: 5%;
   }
   #derecha{
-    top: 90%;
+    top: 85%;
     right: 5%;
   }
   #arriba{
-    top: 90%;
+    top: 85%;
     left: 40%;
   }
 }
