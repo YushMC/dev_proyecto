@@ -8,11 +8,12 @@
         eos dolores dolore necessitatibus repellendus sed veniam, iusto delectus
         veritatis. Ipsam inventore dolorem ratione laboriosam cum excepturi hic?
       </p>
-      <router-link class="more_information" to="/inicio"  data-aos="fade-up" data-aos-duration="1000"> Ver Más</router-link>
+      <router-link class="button_style_2 info" to="/inicio"  data-aos="fade-up" data-aos-duration="1000"> Ver Más</router-link>
       <div class="content_imgs" data-aos="fade-up" data-aos-duration="2000">
         <img src="./../assets/gui/fondo.jpg" alt="Imagen 1"   />
         <img src="./../assets/gui/fondo_2.jpg" alt="Gif 1"  />
       </div>
+      <router-link class="button_style_2 exit" to="/">Regresar</router-link>
     </div>
   </div>
 </template>
@@ -40,15 +41,34 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-.more_information {
+.button_style_2 {
   margin-top: 2%;
   width: 100%;
-  border: 2px solid #a32bdb;
   background: none;
   padding: 2%;
   border-radius: 10px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s linear;
 }
 
+.info{
+  border: 2px solid #a32bdb;
+  color: #a32bdb;
+}
+
+.exit{
+  border: 2px solid #db2b2b;
+  color: #db2b2b;
+}
+.info:hover{
+  background: #a32bdb;
+  color: white;
+}
+.exit:hover{
+  background:  #db2b2b;
+  color: white;
+}
 .view_info {
   width: 100%;
   display: flex;
@@ -68,12 +88,14 @@ onUnmounted(() => {
   backdrop-filter: blur(2px);
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   overflow-y: scroll;
   scrollbar-width: none;
   overflow-x: hidden;
   box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.8);
   transition: all 0.3s linear;
-  height: fit-content;
+  height:auto;
 }
 
 .content_info:hover {
@@ -116,7 +138,8 @@ onUnmounted(() => {
   .content_info{
     width: 80%;
     padding: 5%;
-    margin: 5% auto;
+    margin: 20% auto;
+    height: fit-content;
   }
 }
 </style>

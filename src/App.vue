@@ -38,11 +38,9 @@ const updateScaleVideo = () => {
     posicionX.value = "0.7%";
     matrizPosiciones[3][0] = "0.7%";
   }
-  if(screenWidth.value <= 370 ){
+  
+  if(screenWidth.value <= 370){
     setScale(0.5);
-  }
-  if(screenWidth.value == 320 && screenHeight.value == 568){
-    setScale(0.3);
   }
   if(screenWidth.value <=500){
     posicionX.value = "0.7%";

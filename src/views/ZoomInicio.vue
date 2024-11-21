@@ -1,13 +1,6 @@
 <template>
   <div class="menu">
-    <button
-      id="arriba"
-      :style="{ transform: `scale(${scale})`, opacity: `${opacity}` }"
-      @click="ubicacion(1)"
-      v-if="isItemVisible1"
-    >
-      Hola 1
-    </button>
+    
     <button
       id="izquierda"
       :style="{ transform: `scale(${scale})`, opacity: `${opacity}` }"
@@ -15,6 +8,14 @@
       v-if="isItemVisible2" 
     >
       Hola 2
+    </button>
+    <button
+      id="arriba"
+      :style="{ transform: `scale(${scale})`, opacity: `${opacity}` }"
+      @click="ubicacion(1)"
+      v-if="isItemVisible1"
+    >
+      Hola 1
     </button>
     <button
       id="derecha"
@@ -78,7 +79,7 @@ const ubicacion = (valor) => {
           true,
           false
         );
-        setTextCardInfo("Esto es una prueba 2 xd");
+        setTextCardInfo("Esto es una prueba 2");
         setLink();
         toggleCardInfo();
         break;
@@ -178,7 +179,7 @@ button {
   }
 
   50% {
-    transform: translateY(-10px) scale(1.05);
+    transform: translateY(-10px) scale(1.01);
     box-shadow: 0px 0px 20px 5px rgba(223, 223, 223, 0.952);
 
     /* Subir */
@@ -194,10 +195,10 @@ button {
   .menu{
     position: fixed;
     bottom: 2%;
-    width: 100%;
+    width: 95%;
     position: inherit;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat( auto-fit, minmax(100px, 1fr) );
     gap:5%;
     padding: 0;
   }
