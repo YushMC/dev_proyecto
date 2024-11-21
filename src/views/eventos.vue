@@ -116,7 +116,7 @@ onUnmounted(() => {
   .content_info{
     width: 80%;
     padding: 5%;
-    margin: auto;
+    margin: 5% auto;
   }
 }
 </style>

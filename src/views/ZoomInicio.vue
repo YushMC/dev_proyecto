@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="menu">
     <button
       id="arriba"
       :style="{ transform: `scale(${scale})`, opacity: `${opacity}` }"
@@ -178,8 +178,8 @@ button {
   }
 
   50% {
-    transform: translateY(-20px) scale(1.1);
-    box-shadow: 0px 0px 50px 10px rgba(223, 223, 223, 0.952);
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0px 0px 20px 5px rgba(223, 223, 223, 0.952);
 
     /* Subir */
   }
@@ -191,20 +191,33 @@ button {
   }
 }
 @media screen and (max-width: 600px) {
-  button{
-    width: 20%;
+  .menu{
+    position: fixed;
+    bottom: 2%;
+    width: 100%;
+    position: inherit;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:5%;
+    padding: 0;
   }
-  #izquierda{
-    top: 85%;
-    left: 5%;
+  button{
+    position: relative;
+    width: 100%;
+    margin: 0;
+    inset: 0;
   }
   #derecha{
-    top: 85%;
-    right: 5%;
+    top: 0;
+    right: 0;
+  }
+  #izquierda{
+    top: 0;
+    left: 0;
   }
   #arriba{
-    top: 85%;
-    left: 40%;
+    top: 0;
+    left: 0;
   }
 }
 </style>
