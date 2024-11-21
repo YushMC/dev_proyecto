@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import ZoomInicio from '../views/ZoomInicio.vue';
+import Eventos from '../views/eventos.vue';
 
 
 // Define las rutas
@@ -13,6 +14,11 @@ const routes = [
     path: '/inicio',
     name: 'Inicio',
     component: ZoomInicio
+  },
+  {
+    path: '/eventos',
+    name: 'Eventos',
+    component: Eventos
   }
 ];
 

@@ -1,19 +1,19 @@
 <template>
     <transition>
         <div class="cardInfo" v-if="isCardInfoVisible">
-            <h1>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit amet saepe ipsum minima recusandae
-                labore
-                vero
-                rerum nulla perferendis earum!</h1>
-            <button>Comenzar</button>
+            <h1>{{ getText }}</h1>
+            <router-link :to="getEnlace">Comenzar</router-link>
         </div>
     </transition>
 </template>
 
 <script setup>
+import { RouterLink } from 'vue-router';
 import { useCardInfo } from './../composables/useCardInfo';
-const { isCardInfoVisible } = useCardInfo();
-console.log('isCardInfoVisible en el componente: ', isCardInfoVisible)
+const { isCardInfoVisible, getEnlace, getText } = useCardInfo();
+console.log('isCardInfoVisible en el componente: ', isCardInfoVisible);
+
+console.log('dato en getEnlace: ', getEnlace.value)
 </script>
 
 <style scoped>
@@ -95,7 +95,7 @@ console.log('isCardInfoVisible en el componente: ', isCardInfoVisible)
     font-weight: 400;
 }
 
-.cardInfo button {
+.cardInfo a {
     border: 2px solid #000000;
     border-radius: 5px;
     background: none;
@@ -104,9 +104,10 @@ console.log('isCardInfoVisible en el componente: ', isCardInfoVisible)
     margin: 2% 0;
     transition: all 0.3s linear;
     text-transform: uppercase;
+    text-decoration: none;
 }
 
-.cardInfo button:hover {
+.cardInfo a:hover {
     background: #000000;
     color: #fff;
     box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.603);
