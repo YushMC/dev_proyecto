@@ -33,14 +33,14 @@ const updateScaleVideo = () => {
     setScale(0.5);
   }
   if(screenWidth.value < 500 && screenWidth.value >370){
-    setScale(0.6);
+    setScale(0.45);
     
     posicionX.value = "0.7%";
     matrizPosiciones[3][0] = "0.7%";
   }
   
   if(screenWidth.value <= 370){
-    setScale(0.5);
+    setScale(0.2);
   }
   if(screenWidth.value <=500){
     posicionX.value = "0.7%";

@@ -1,13 +1,12 @@
 <template>
   <div class="menu">
-    
     <button
       id="izquierda"
       :style="{ transform: `scale(${scale})`, opacity: `${opacity}` }"
       @click="ubicacion(2)"
-      v-if="isItemVisible2" 
+      v-if="isItemVisible2"
     >
-      Hola 2
+      <img src="./../assets/gui/star.png" alt="" />
     </button>
     <button
       id="arriba"
@@ -15,7 +14,7 @@
       @click="ubicacion(1)"
       v-if="isItemVisible1"
     >
-      Hola 1
+      <img src="./../assets/gui/star.png" alt="" />
     </button>
     <button
       id="derecha"
@@ -23,7 +22,7 @@
       @click="ubicacion(3)"
       v-if="isItemVisible3"
     >
-      Hola 3
+      <img src="./../assets/gui/star.png" alt="" />
     </button>
     <Cards></Cards>
   </div>
@@ -47,11 +46,8 @@ const {
   click,
 } = useItemsMenu();
 
-
 import { useSceenSize } from "../composables/useScreenSize";
-const {screenHeight, screenWidth, updateSizes} = useSceenSize();
-
-
+const { screenHeight, screenWidth, updateSizes } = useSceenSize();
 
 const opacity = ref(0);
 //mover la camara al item seleccionado
@@ -146,15 +142,18 @@ video {
 
 button {
   width: 10%;
-  height: 50px;
   position: absolute;
   transition: all 0.3s linear !important;
   animation: bounce 3s infinite ease-in-out;
   border: none;
   border-radius: 10px;
-  background: rgba(223, 223, 223, 0.788);
+  display: flex;
+  flex-direction: column;
+  background: none;
 }
-
+button > img {
+  width: 100%;
+}
 #izquierda {
   top: 65%;
   left: 20%;
@@ -180,7 +179,7 @@ button {
 
   50% {
     transform: translateY(-10px) scale(1.01);
-    box-shadow: 0px 0px 20px 5px rgba(223, 223, 223, 0.952);
+    filter: drop-shadow(2px 5px 22px rgba(255, 255, 255, 0.938));
 
     /* Subir */
   }
@@ -192,31 +191,31 @@ button {
   }
 }
 @media screen and (max-width: 600px) {
-  .menu{
+  .menu {
     position: fixed;
     bottom: 2%;
     width: 95%;
     position: inherit;
     display: grid;
-    grid-template-columns: repeat( auto-fit, minmax(100px, 1fr) );
-    gap:5%;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 5%;
     padding: 0;
   }
-  button{
+  button {
     position: relative;
     width: 100%;
     margin: 0;
     inset: 0;
   }
-  #derecha{
+  #derecha {
     top: 0;
     right: 0;
   }
-  #izquierda{
+  #izquierda {
     top: 0;
     left: 0;
   }
-  #arriba{
+  #arriba {
     top: 0;
     left: 0;
   }
