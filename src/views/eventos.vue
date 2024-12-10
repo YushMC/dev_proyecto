@@ -1,17 +1,25 @@
 <template>
   <div class="view_info">
-    <div class="content_info"  data-aos="fade-up" data-aos-duration="1000">
+    <div class="content_info" data-aos="fade-up" data-aos-duration="2000">
       <h1>Titulo</h1>
       <hr />
       <p>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magni, rerum totam ad,
-        eos dolores dolore necessitatibus repellendus sed veniam, iusto delectus
-        veritatis. Ipsam inventore dolorem ratione laboriosam cum excepturi hic?
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magni, rerum
+        totam ad, eos dolores dolore necessitatibus repellendus sed veniam,
+        iusto delectus veritatis. Ipsam inventore dolorem ratione laboriosam cum
+        excepturi hic?
       </p>
-      <router-link class="button_style_2 info" to="/inicio"  data-aos="fade-up" data-aos-duration="1000"> Ver Más</router-link>
+      <router-link
+        class="button_style_2 info"
+        to="/inicio"
+        data-aos="fade-up"
+        data-aos-duration="1000"
+      >
+        Ver Más</router-link
+      >
       <div class="content_imgs" data-aos="fade-up" data-aos-duration="2000">
-        <img src="./../assets/gui/fondo.jpg" alt="Imagen 1"   />
-        <img src="./../assets/gui/fondo_2.jpg" alt="Gif 1"  />
+        <img src="./../assets/gui/fondo.jpg" alt="Imagen 1" />
+        <img src="./../assets/gui/fondo_2.jpg" alt="Gif 1" />
       </div>
       <router-link class="button_style_2 exit" to="/">Regresar</router-link>
     </div>
@@ -21,26 +29,27 @@
 <script setup>
 import { onMounted, onUnmounted, ref } from "vue";
 import { useItemsMenu } from "../composables/useItemsMenu";
-const { setButtonsAndPosition, matrizPosiciones, onlyResetScaleVideo } = useItemsMenu();
+const { setButtonsAndPosition, matrizPosiciones, onlyResetScaleVideo } =
+  useItemsMenu();
 
-onMounted(() => {
-  
-  setButtonsAndPosition(
-    matrizPosiciones[0][0],
-    matrizPosiciones[0][1],
-    false,
-    false,
-    false
-  );
-});
+onMounted(() => {});
 
 onUnmounted(() => {
-  setButtonsAndPosition(matrizPosiciones[3][0], matrizPosiciones[3][1], true, true, true);
+  setButtonsAndPosition(
+    matrizPosiciones[3][0],
+    matrizPosiciones[3][1],
+    true,
+    true,
+    true
+  );
   onlyResetScaleVideo();
 });
 </script>
 
 <style scoped>
+.view_info {
+  background: rgba(0, 0, 0, 0.7);
+}
 .button_style_2 {
   margin-top: 2%;
   width: 100%;
@@ -52,21 +61,21 @@ onUnmounted(() => {
   transition: all 0.3s linear;
 }
 
-.info{
+.info {
   border: 2px solid #a32bdb;
   color: #a32bdb;
 }
 
-.exit{
+.exit {
   border: 2px solid #db2b2b;
   color: #db2b2b;
 }
-.info:hover{
+.info:hover {
   background: #a32bdb;
   color: white;
 }
-.exit:hover{
-  background:  #db2b2b;
+.exit:hover {
+  background: #db2b2b;
   color: white;
 }
 .view_info {
@@ -81,7 +90,7 @@ onUnmounted(() => {
 
 .content_info {
   max-width: 800px;
-  margin: 2% auto;
+  margin: 1.5% auto;
   padding: 2%;
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.6);
@@ -90,16 +99,12 @@ onUnmounted(() => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow-y: scroll;
-  scrollbar-width: none;
+  overflow-y: auto;
+  scrollbar-color: #a32bdb transparent;
+  scrollbar-gutter: stable;
   overflow-x: hidden;
   box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.8);
   transition: all 0.3s linear;
-  height:auto;
-}
-
-.content_info:hover {
-  transform: scale(1.02);
 }
 
 .content_info h1 {
@@ -133,13 +138,32 @@ onUnmounted(() => {
 .content_imgs img:nth-child(2n) {
   margin-left: 20%;
 }
-
-@media screen and (max-width: 800px) {
-  .content_info{
+@media screen and (min-width: 1370px) {
+  .content_info h1 {
+    margin-top: 15%;
+  }
+}
+@media screen and (max-width: 1369px) and (min-width: 1000px) {
+  .content_info h1 {
+    margin-top: 55%;
+  }
+}
+@media screen and (max-width: 1285px) and (max-height: 799px) {
+  .content_info h1 {
+    margin-top: 40%;
+  }
+}
+@media screen and (max-width: 900px) {
+  .content_info {
     width: 80%;
     padding: 5%;
-    margin: 20% auto;
+    margin: auto;
     height: fit-content;
+  }
+}
+@media screen and (max-width: 600px) {
+  .content_info h1 {
+    margin-top: 0%;
   }
 }
 </style>

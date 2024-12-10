@@ -3,10 +3,11 @@ import { onMounted, onUnmounted, ref, watch } from "vue";
 import { RouterView, useRouter, useRoute } from "vue-router";
 
 import { useItemsMenu } from "./composables/useItemsMenu";
-const { posicionX, posicionY, scale, setScale, matrizPosiciones} = useItemsMenu();
+const { posicionX, posicionY, scale, setScale, matrizPosiciones } =
+  useItemsMenu();
 
 import { useSceenSize } from "./composables/useScreenSize";
-const {screenHeight, screenWidth, updateSizes} = useSceenSize();
+const { screenHeight, screenWidth, updateSizes } = useSceenSize();
 
 const updateScrrenSize = () => {
   updateSizes();
@@ -21,28 +22,32 @@ const updateScaleVideo = () => {
     setScale(0.5);
   }
   //Nest Hub Max
-  if(screenWidth.value == 1280 && screenHeight.value == 800){
+  if (screenWidth.value == 1280 && screenHeight.value == 800) {
     setScale(0.6);
   }
   //Ipads
-  if ((screenHeight.value < 1400 && screenHeight.value > 700) && screenWidth.value < 1100) {
+  if (
+    screenHeight.value < 1400 &&
+    screenHeight.value > 700 &&
+    screenWidth.value < 1100
+  ) {
     setScale(0.9);
   }
   //surface Duo
   if (screenHeight.value <= 750 && screenWidth.value >= 500) {
     setScale(0.5);
   }
-  if(screenWidth.value < 500 && screenWidth.value >370){
+  if (screenWidth.value < 500 && screenWidth.value > 370) {
     setScale(0.6);
-    
+
     posicionX.value = "0.7%";
     matrizPosiciones[3][0] = "0.7%";
   }
-  
-  if(screenWidth.value <= 370){
+
+  if (screenWidth.value <= 370) {
     setScale(0.5);
   }
-  if(screenWidth.value <=500){
+  if (screenWidth.value <= 500) {
     posicionX.value = "0.7%";
     matrizPosiciones[3][0] = "0.7%";
   }
@@ -87,7 +92,7 @@ onUnmounted(() => {
 }
 
 video {
-  transition: all 0.15s linear;
+  transition: all 1s linear;
 }
 
 .zoom-background {
@@ -109,7 +114,7 @@ video {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: all 0.2s linear;
+  transition: all 0.5s linear !important;
   /* Duración de 0.5 segundos */
 }
 

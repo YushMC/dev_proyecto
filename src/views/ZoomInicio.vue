@@ -1,29 +1,31 @@
 <template>
   <div class="menu">
-    
     <button
       id="izquierda"
-      :style="{ transform: `scale(${scale})`, opacity: `${opacity}` }"
+      :style="{ opacity: `${opacity}` }"
       @click="ubicacion(2)"
-      v-if="isItemVisible2" 
+      v-if="isItemVisible2"
     >
-      Hola 2
+      <img src="./../assets/gui/estrella.png" alt="" />
+      <h2>Eventos</h2>
     </button>
     <button
       id="arriba"
-      :style="{ transform: `scale(${scale})`, opacity: `${opacity}` }"
+      :style="{ opacity: `${opacity}` }"
       @click="ubicacion(1)"
       v-if="isItemVisible1"
     >
-      Hola 1
+      <img src="./../assets/gui/estrella.png" alt="" />
+      <h2>Salon de Belleza</h2>
     </button>
     <button
       id="derecha"
-      :style="{ transform: `scale(${scale})`, opacity: `${opacity}` }"
+      :style="{ opacity: `${opacity}` }"
       @click="ubicacion(3)"
       v-if="isItemVisible3"
     >
-      Hola 3
+      <img src="./../assets/gui/estrella.png" alt="" />
+      <h2>Renta de Autos</h2>
     </button>
     <Cards></Cards>
   </div>
@@ -44,76 +46,61 @@ const {
   isItemVisible3,
   matrizPosiciones,
   scale,
-  click,
 } = useItemsMenu();
 
-
 import { useSceenSize } from "../composables/useScreenSize";
-const {screenHeight, screenWidth, updateSizes} = useSceenSize();
+const { screenHeight, screenWidth, updateSizes } = useSceenSize();
 
+import { useRouter } from "vue-router";
+const router = useRouter();
 
+/* --- INICIA EL CÓDIGO  */
 
 const opacity = ref(0);
 //mover la camara al item seleccionado
 const ubicacion = (valor) => {
-  if (click.value == 0) {
-    switch (valor) {
-      case 1:
-        setButtonsAndPosition(
-          matrizPosiciones[0][0],
-          matrizPosiciones[0][1],
-          true,
-          false,
-          false
-        );
-        setTextCardInfo("Esto es una prueba");
-        setLink(1);
-        toggleCardInfo();
-        break;
+  switch (valor) {
+    case 1:
+      setButtonsAndPosition(
+        matrizPosiciones[0][0],
+        matrizPosiciones[0][1],
+        false,
+        false,
+        false
+      );
+      router.push("/eventos");
+      break;
 
-      case 2:
-        setButtonsAndPosition(
-          matrizPosiciones[1][0],
-          matrizPosiciones[1][1],
-          false,
-          true,
-          false
-        );
-        setTextCardInfo("Esto es una prueba 2");
-        setLink();
-        toggleCardInfo();
-        break;
-      case 3:
-        setButtonsAndPosition(
-          matrizPosiciones[2][0],
-          matrizPosiciones[2][1],
-          false,
-          false,
-          true
-        );
-        setTextCardInfo("Esto es una prueba 3");
-        setLink(1);
-        toggleCardInfo();
-        break;
-      default:
-        toggleCardInfo();
-        toggleItemVisible1();
-        resetItems();
-    }
-  } else {
-    toggleCardInfo();
-    resetItems();
+    case 2:
+      setButtonsAndPosition(
+        matrizPosiciones[1][0],
+        matrizPosiciones[1][1],
+        false,
+        false,
+        false
+      );
+      router.push("/eventos");
+      break;
+    case 3:
+      setButtonsAndPosition(
+        matrizPosiciones[2][0],
+        matrizPosiciones[2][1],
+        false,
+        false,
+        false
+      );
+      router.push("/eventos");
+      break;
+    default:
+      toggleItemVisible1();
+      resetItems();
   }
 };
 
 onMounted(() => {
-  click.value = 0;
   opacity.value = "1";
 });
-onUnmounted(() => {
-  resetItems();
-  toggleCardInfo();
-});
+onUnmounted(() => {});
 </script>
 
 <style scoped>
@@ -126,7 +113,9 @@ onUnmounted(() => {
 video {
   transition: all 0.3s linear;
 }
-
+.menu {
+  width: 100%;
+}
 .zoom-background {
   width: 100%;
   height: 100vh;
@@ -145,78 +134,120 @@ video {
 }
 
 button {
-  width: 10%;
-  height: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   transition: all 0.3s linear !important;
-  animation: bounce 3s infinite ease-in-out;
+
   border: none;
   border-radius: 10px;
-  background: rgba(223, 223, 223, 0.788);
+  padding: 1%;
+  background: none;
+}
+button:hover {
+  transform: scale(1.2) !important;
+}
+button > img {
+  filter: drop-shadow(-2px 0px 16px #ffffff94);
+  width: 250px;
+  animation: girar 30s infinite linear;
 }
 
+button h2 {
+  position: absolute;
+  color: #fff;
+  text-shadow: -4px 0px 5px rgba(0, 0, 0, 0.6);
+  width: 100%;
+  padding: 0.5%;
+  backdrop-filter: blur(1.25px);
+  z-index: 90;
+}
+@keyframes girar {
+  from {
+    transform: rotate(0deg) translateY(0);
+  }
+  to {
+    transform: rotate(360deg) translateY(-10px);
+  }
+}
+@keyframes respiracion_letras {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
 #izquierda {
-  top: 65%;
+  top: 60%;
   left: 20%;
 }
 
 #derecha {
-  top: 65%;
+  top: 60%;
   right: 20%;
 }
 
 #arriba {
   top: 45%;
-  left: 44%;
+  left: 42%;
 }
-
-/*  Animacion de los items flotantes*/
-@keyframes bounce {
-  0% {
-    transform: translateY(0) scale(1);
-
-    /* Posición inicial */
+@media screen and (max-width: 1370px) and (min-width: 1000px) {
+  #arriba {
+    left: 40%;
+    top: 40%;
   }
-
-  50% {
-    transform: translateY(-10px) scale(1.01);
-    box-shadow: 0px 0px 20px 5px rgba(223, 223, 223, 0.952);
-
-    /* Subir */
+  #izquierda {
+    left: 15%;
   }
-
-  100% {
-    transform: translateY(0) scale(1);
-
-    /* Regresar */
+  #derecha {
+    right: 15%;
+  }
+  #izquierda,
+  #derecha {
+    top: 55%;
   }
 }
 @media screen and (max-width: 600px) {
-  .menu{
-    position: fixed;
-    bottom: 2%;
-    width: 95%;
-    position: inherit;
+  .menu {
+    position: fixed !important ;
+    bottom: 1%;
     display: grid;
-    grid-template-columns: repeat( auto-fit, minmax(100px, 1fr) );
-    gap:5%;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5%;
     padding: 0;
+    margin: 0 2%;
   }
-  button{
+  button {
     position: relative;
     width: 100%;
     margin: 0;
-    inset: 0;
+    overflow: hidden;
   }
-  #derecha{
+  button > img {
+    width: 100%;
+    filter: drop-shadow(-2px 0px 5px #ffffff94);
+  }
+  button > h2 {
+    font-size: 1em;
+  }
+  #derecha {
     top: 0;
     right: 0;
   }
-  #izquierda{
+  #izquierda {
     top: 0;
     left: 0;
   }
-  #arriba{
+  #arriba {
     top: 0;
     left: 0;
   }
