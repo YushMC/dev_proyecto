@@ -1,4 +1,8 @@
 import { ref } from "vue";
+import { useTripVideo } from "./useTripVideo";
+
+const { toggleTripVideo } = useTripVideo();
+
 // Estado compartido de los items
 const isItemVisible1 = ref(true);
 const isItemVisible2 = ref(true);
@@ -18,7 +22,7 @@ let matrizPosiciones = [
 ];
 
 // funcion que coloca el focus del item y la posicion del fondo
-const setButtonsAndPosition = (valor, valor2, item1, item2, item3) => {
+const setButtonsAndPosition = (valor, valor2, item1, item2, item3, ruta) => {
   posicionX.value = valor;
   posicionY.value = valor2;
   isItemVisible1.value = item1;

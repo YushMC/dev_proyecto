@@ -1,43 +1,71 @@
 <template>
-  <div class="menu">
-    <button
-      id="izquierda"
-      :style="{ opacity: `${opacity}` }"
-      @click="ubicacion(2)"
-      v-if="isItemVisible2"
-    >
-      <img src="./../assets/gui/estrella.png" alt="" />
-      <h2>Eventos</h2>
-    </button>
-    <button
-      id="arriba"
-      :style="{ opacity: `${opacity}` }"
-      @click="ubicacion(1)"
-      v-if="isItemVisible1"
-    >
-      <img src="./../assets/gui/estrella.png" alt="" />
-      <h2>Salon de Belleza</h2>
-    </button>
-    <button
-      id="derecha"
-      :style="{ opacity: `${opacity}` }"
-      @click="ubicacion(3)"
-      v-if="isItemVisible3"
-    >
-      <img src="./../assets/gui/estrella.png" alt="" />
-      <h2>Renta de Autos</h2>
-    </button>
-    <Cards></Cards>
+  <div class="zoom-background">
+    <transition name="fade">
+      <video
+        autoplay
+        muted
+        loop
+        playsinline
+        class="video-background"
+        preload="metadata"
+        :style="{
+          transform: `scale(${scale}) translateX(${posicionX}) translateY(${posicionY})`,
+        }"
+        v-if="isBackgroundVideoVisible"
+      >
+        <source src="../assets/animations/02.mp4" type="video/mp4" />
+      </video>
+    </transition>
+    <div class="menu">
+      <button
+        id="izquierda"
+        :style="{ opacity: `${opacity}` }"
+        @click="ubicacion(2)"
+        v-if="isItemVisible2"
+      >
+        <img src="./../assets/gui/estrella.png" alt="" />
+        <h2>Eventos</h2>
+      </button>
+      <button
+        id="arriba"
+        :style="{ opacity: `${opacity}` }"
+        @click="ubicacion(1)"
+        v-if="isItemVisible1"
+      >
+        <img src="./../assets/gui/estrella.png" alt="" />
+        <h2>Salon de Belleza</h2>
+      </button>
+      <button
+        id="derecha"
+        :style="{ opacity: `${opacity}` }"
+        @click="ubicacion(3)"
+        v-if="isItemVisible3"
+      >
+        <img src="./../assets/gui/estrella.png" alt="" />
+        <h2>Renta de Autos</h2>
+      </button>
+      <Cards></Cards>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, ref } from "vue";
-import { useCardInfo } from "../composables/useCardInfo";
-const { toggleCardInfo, setLink, setTextCardInfo } = useCardInfo();
+/**
+ * Importaciones: primero las librerías externas, luego los composables,
+ * y finalmente los componentes locales.
+ */
+import { ref, onMounted, onUnmounted } from "vue";
+import { useRouter } from "vue-router";
+import { useTripVideo } from "../composables/useTripVideo";
+import { useItemsMenu } from "../composables/useItemsMenu";
+import { useSceenSize } from "../composables/useScreenSize";
 import Cards from "../components/Cards.vue";
 
-import { useItemsMenu } from "../composables/useItemsMenu";
+/**
+ * Composables: Desestructuración de funciones y valores.
+ * Los agrupamos según su origen para mantener el orden.
+ */
+const { isBackgroundVideoVisible, isTripVideoVisible } = useTripVideo();
 const {
   setButtonsAndPosition,
   resetItems,
@@ -46,18 +74,21 @@ const {
   isItemVisible3,
   matrizPosiciones,
   scale,
+  posicionX,
+  posicionY,
+  setScale,
 } = useItemsMenu();
-
-import { useSceenSize } from "../composables/useScreenSize";
 const { screenHeight, screenWidth, updateSizes } = useSceenSize();
 
-import { useRouter } from "vue-router";
+/**
+ * Variables reactivas y router.
+ */
+const opacity = ref(0);
 const router = useRouter();
 
-/* --- INICIA EL CÓDIGO  */
-
-const opacity = ref(0);
-//mover la camara al item seleccionado
+/**
+ * Función para manejar la ubicación del item seleccionado.
+ */
 const ubicacion = (valor) => {
   switch (valor) {
     case 1:
@@ -68,7 +99,11 @@ const ubicacion = (valor) => {
         false,
         false
       );
-      router.push("/eventos");
+      isTripVideoVisible.value = true;
+
+      setTimeout(() => {
+        router.push("/eventos");
+      }, 500);
       break;
 
     case 2:
@@ -79,8 +114,13 @@ const ubicacion = (valor) => {
         false,
         false
       );
-      router.push("/eventos");
+      isTripVideoVisible.value = true;
+
+      setTimeout(() => {
+        router.push("/eventos");
+      }, 500);
       break;
+
     case 3:
       setButtonsAndPosition(
         matrizPosiciones[2][0],
@@ -89,18 +129,93 @@ const ubicacion = (valor) => {
         false,
         false
       );
-      router.push("/eventos");
+      isTripVideoVisible.value = true;
+
+      setTimeout(() => {
+        router.push("/eventos");
+      }, 500);
       break;
+
     default:
-      toggleItemVisible1();
       resetItems();
   }
 };
 
+/**
+ * Función para actualizar el tamaño de la pantalla.
+ */
+const updateScrrenSize = () => {
+  updateSizes();
+  updateScaleVideo();
+};
+
+/**
+ * Función para ajustar el escalado del video según el tamaño de la pantalla.
+ */
+const updateScaleVideo = () => {
+  // Para pantallas grandes
+  if (screenWidth.value > 1500) {
+    setScale(0.7);
+  }
+  // Pantallas intermedias
+  if (screenWidth.value < 1500 && screenWidth.value >= 1000) {
+    setScale(0.5);
+  }
+  // Nest Hub Max
+  if (screenWidth.value == 1280 && screenHeight.value == 800) {
+    setScale(0.6);
+  }
+  // iPads
+  if (
+    screenHeight.value < 1400 &&
+    screenHeight.value > 700 &&
+    screenWidth.value < 1100
+  ) {
+    setScale(0.9);
+  }
+  // Surface Duo
+  if (screenHeight.value <= 750 && screenWidth.value >= 500) {
+    setScale(0.5);
+  }
+  // Pantallas pequeñas
+  if (screenWidth.value < 500 && screenWidth.value > 370) {
+    setScale(0.6);
+    posicionX.value = "0.7%";
+    matrizPosiciones[3][0] = "0.7%";
+  }
+  if (screenWidth.value <= 370) {
+    setScale(0.5);
+  }
+  if (screenWidth.value <= 500) {
+    posicionX.value = "0.7%";
+    matrizPosiciones[3][0] = "0.7%";
+  }
+};
+// Crear una función sleep
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+/**
+ * Lifecycle Hooks
+ */
 onMounted(() => {
-  opacity.value = "1";
+  resetItems();
+  updateScaleVideo();
+  window.addEventListener("resize", updateScrrenSize);
+  setTimeout(() => {
+    opacity.value = "1";
+  }, 500);
+  if (!isTripVideoVisible.value) {
+    isTripVideoVisible.value = true;
+    isBackgroundVideoVisible.value = false;
+  }
+  setTimeout(() => {
+    isTripVideoVisible.value = false;
+    isBackgroundVideoVisible.value = true;
+  }, 2000);
 });
-onUnmounted(() => {});
+
+onUnmounted(() => {
+  window.removeEventListener("resize", updateScrrenSize);
+});
 </script>
 
 <style scoped>
@@ -118,11 +233,10 @@ video {
 }
 .zoom-background {
   width: 100%;
-  height: 100vh;
+  height: 100dvh;
   /* Ajusta según sea necesario */
   transition: background-size 0.2s ease;
   background-size: cover;
-  background-image: url(./../assets/gui/fondo_2.jpg);
   background-attachment: fixed;
   background-repeat: no-repeat;
   position: fixed;

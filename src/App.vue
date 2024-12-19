@@ -1,87 +1,31 @@
 <script setup>
-import { onMounted, onUnmounted, ref, watch } from "vue";
-import { RouterView, useRouter, useRoute } from "vue-router";
+import Cabecera from "./components/Cabecera.vue";
+import Footer from "./components/Footer.vue";
+import Trip from "./components/Trip.vue";
 
-import { useItemsMenu } from "./composables/useItemsMenu";
-const { posicionX, posicionY, scale, setScale, matrizPosiciones } =
-  useItemsMenu();
+import { useRoute } from "vue-router";
 
-import { useSceenSize } from "./composables/useScreenSize";
-const { screenHeight, screenWidth, updateSizes } = useSceenSize();
-
-const updateScrrenSize = () => {
-  updateSizes();
-  updateScaleVideo();
-};
-const updateScaleVideo = () => {
-  //mayores a este tamaño
-  if (screenWidth.value > 1500) {
-    setScale(0.7);
-  }
-  if (screenWidth.value < 1500 && screenWidth.value >= 1000) {
-    setScale(0.5);
-  }
-  //Nest Hub Max
-  if (screenWidth.value == 1280 && screenHeight.value == 800) {
-    setScale(0.6);
-  }
-  //Ipads
-  if (
-    screenHeight.value < 1400 &&
-    screenHeight.value > 700 &&
-    screenWidth.value < 1100
-  ) {
-    setScale(0.9);
-  }
-  //surface Duo
-  if (screenHeight.value <= 750 && screenWidth.value >= 500) {
-    setScale(0.5);
-  }
-  if (screenWidth.value < 500 && screenWidth.value > 370) {
-    setScale(0.6);
-
-    posicionX.value = "0.7%";
-    matrizPosiciones[3][0] = "0.7%";
-  }
-
-  if (screenWidth.value <= 370) {
-    setScale(0.5);
-  }
-  if (screenWidth.value <= 500) {
-    posicionX.value = "0.7%";
-    matrizPosiciones[3][0] = "0.7%";
-  }
-};
-onMounted(() => {
-  updateScaleVideo();
-  window.addEventListener("resize", updateScrrenSize);
-});
-
-onUnmounted(() => {
-  window.removeEventListener("resize", updateScrrenSize);
-});
+const route = useRoute();
 </script>
 
 <template>
-  <div class="zoom-background">
-    <video
-      autoplay
-      muted
-      loop
-      playsinline
-      class="video-background"
-      :style="{
-        transform: `scale(${scale}) translateX(${posicionX}) translateY(${posicionY})`,
-      }"
-    >
-      <source src="./assets/animations/02.mp4" type="video/mp4" />
-    </video>
-    <router-view v-slot="{ Component }">
-      <transition name="fade">
-        <component :is="Component" :key="$route.fullPath" />
-      </transition>
-    </router-view>
-  </div>
+  <transition name="fade">
+    <Cabecera v-if="route.path !== '/'"></Cabecera>
+  </transition>
+
+  <transition name="fade">
+    <Trip></Trip>
+  </transition>
+  <router-view v-slot="{ Component }">
+    <transition name="fade">
+      <div :key="$route.fullPath">
+        <component :is="Component" />
+      </div>
+    </transition>
+  </router-view>
+  <transition name="fade">
+    <Footer v-if="route.path !== '/'"></Footer>
+  </transition>
 </template>
 
 <style scoped>
@@ -114,13 +58,16 @@ video {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: all 0.5s linear !important;
-  /* Duración de 0.5 segundos */
+  transition: all 1s ease; /* Suaviza la transición */
 }
 
 .fade-enter-from,
 .fade-leave-to {
-  opacity: 0;
-  /* El elemento entra o sale con opacidad cero */
+  opacity: 0; /* El elemento comienza o termina con opacidad cero */
+}
+
+.fade-enter-to,
+.fade-leave-from {
+  opacity: 1; /* El elemento alcanza o inicia en opacidad completa */
 }
 </style>
