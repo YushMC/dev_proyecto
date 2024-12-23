@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header :class="{ down_header: scrollY > 0 }">
     <div class="container_header">
       <div class="container_info_header">
         <h1>{{ route.name }}</h1>
@@ -32,7 +32,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 import { useRoute } from "vue-router";
 const route = useRoute();
 
@@ -55,29 +55,59 @@ const ocultarMenus = () => {
   isMenuVisible1.value = false;
   isMenuVisible2.value = false;
 };
+
+const scrollY = ref(0);
+
+const handleScroll = () => {
+  scrollY.value = window.scrollY;
+};
+onMounted(() => {
+  window.addEventListener("scroll", handleScroll);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleScroll);
+});
 </script>
 
 <style scoped>
 header {
   position: fixed;
-  width: 100dvw;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 
-  background: #bebdbd;
   padding: 2% 0;
   z-index: 90;
+  transition: all 0.3s linear;
+}
+.down_header {
+  backdrop-filter: blur(3px);
+  background: #ffffffc7;
+  padding: 0.5% 0;
+  box-shadow: 0px 0px 10px 6px rgba(0, 0, 0, 0.5);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.down_header .container_header {
+  padding: 0;
+}
+.down_header .container_header h1 {
+  color: #000;
 }
 .container_header {
   position: relative;
-  width: 80%;
+  width: 85%;
   margin: auto;
   display: flex;
   flex-direction: column;
   justify-content: start;
   align-items: start;
   z-index: 90;
+}
+.container_header h1 {
+  color: #fff;
 }
 .container_info_header {
   width: 100%;
@@ -86,7 +116,7 @@ header {
   align-items: center;
 }
 .container_nav {
-  position: fixed;
+  position: fixed !important;
   top: 15%;
   left: 0;
   width: 60%;
@@ -167,6 +197,25 @@ li span:hover {
 @media screen and (min-width: 800px) {
   .cerrar {
     display: none;
+  }
+}
+@media screen and (min-width: 1000px) {
+  .container_nav {
+    width: 20%;
+    top: 40dvh;
+  }
+}
+@media screen and (max-width: 600px) {
+  header {
+    backdrop-filter: blur(3px);
+    background: #ffffffc7;
+    box-shadow: 0px 0px 10px 6px rgba(0, 0, 0, 0.5);
+  }
+  .container_header h1 {
+    color: #000;
+  }
+  .container_nav {
+    top: 10dvh;
   }
 }
 </style>

@@ -114,7 +114,7 @@ onUnmounted(() => {
     transform: rotate(90deg) scale(4);
   }
   .subtitulo {
-    width: 80%;
+    width: 85%;
     left: 10%;
   }
   .subtitulo h1 {
